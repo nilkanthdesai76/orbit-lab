@@ -135,7 +135,7 @@ function createAtmosphere() {
   const fragmentShader = `
     varying vec3 vNormal;
     void main() {
-      float intensity = pow(0.65 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.2);
+      float intensity = pow(max(0.0, 0.65 - dot(vNormal, vec3(0.0, 0.0, 1.0))), 2.2);
       gl_FragColor = vec4(0.25, 0.65, 1.0, 1.0) * intensity;
     }
   `;
