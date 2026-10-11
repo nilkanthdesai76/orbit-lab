@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OrbitLab — 3D Real-Time Earth & Satellite Telemetry</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="space-viewport" id="viewport">
+    <!-- Top Mission Control Bar -->
+    <header class="hud-top">
+      <div class="brand">
+        <div class="orbit-badge">NORAD 25544</div>
+        <div class="brand-title">Orbit<span>Lab</span></div>
+      </div>
+
+      <!-- Quick Telemetry Badges -->
+      <div class="telemetry-badges">
+        <div class="badge">
+          <span class="lbl">ALTITUDE</span>
+          <span class="val" id="hudAlt">418.2 km</span>
+        </div>
+        <div class="badge">
+          <span class="lbl">VELOCITY</span>
+          <span class="val" id="hudVel">27,580 km/h</span>
+        </div>
+        <div class="badge">
+          <span class="lbl">COORDINATES</span>
+          <span class="val" id="hudCoords">51.6° N, 0.1° E</span>
+        </div>
+        <div class="badge">
+          <span class="lbl">SUNLIGHT</span>
+          <span class="val text-success" id="hudSunlight">DAYLIGHT</span>
+        </div>
+      </div>
+
+      <!-- Camera Action Buttons -->
+      <div class="camera-actions">
+        <button id="btnLockIss" class="btn-hud" onclick="toggleLockIss()">🎯 LOCK ISS</button>
+        <button class="btn-hud" onclick="resetCamera()">🌍 RESET VIEW</button>
+      </div>
+    </header>
+
+    <!-- Left Satellite Inspector -->
+    <aside class="hud-sidebar">
+      <div class="hud-card">
+        <h3>TRACKED OBJECT</h3>
+        <div class="satellite-profile">
+          <div class="sat-icon">🛰️</div>
+          <div>
+            <div class="sat-name">ISS (ZARYA)</div>
+            <div class="sat-sub">International Space Station</div>
+          </div>
+        </div>
+        <div class="spec-grid">
+          <div class="spec-row"><span>Inclination:</span><strong>51.64°</strong></div>
+          <div class="spec-row"><span>Period:</span><strong>92.9 min</strong></div>
+          <div class="spec-row"><span>Apogee:</span><strong>422 km</strong></div>
+          <div class="spec-row"><span>Perigee:</span><strong>414 km</strong></div>
+          <div class="spec-row"><span>Crew Onboard:</span><strong>7 Astronauts</strong></div>
+        </div>
+      </div>
+
+      <!-- Constellations Toggle -->
+      <div class="hud-card">
+        <h3>CONSTELLATION LAYERS</h3>
+        <div class="layer-toggles">
+          <label class="toggle-item">
+            <input type="checkbox" id="layerIss" checked onchange="toggleLayer('iss')">
+            <span>ISS Orbital Trajectory</span>
+          </label>
+          <label class="toggle-item">
+            <input type="checkbox" id="layerGps" checked onchange="toggleLayer('gps')">
+            <span>GPS MEO Constellation</span>
+          </label>
+          <label class="toggle-item">
+            <input type="checkbox" id="layerStarlink" checked onchange="toggleLayer('starlink')">
+            <span>Starlink LEO Swarm</span>
+          </label>
+          <label class="toggle-item">
+            <input type="checkbox" id="layerHubble" checked onchange="toggleLayer('hubble')">
+            <span>Hubble Space Telescope</span>
+          </label>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Bottom Mission Log -->
+    <footer class="hud-bottom">
+      <div class="pulse-indicator"></div>
+      <span id="logStatus">LIVE TELEMETRY STREAMING VIA OPEN NOTIFY • SGP4 PROPAGATION ACTIVE</span>
+      <span class="author-tag">Engineered by Nilkanth Desai</span>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
